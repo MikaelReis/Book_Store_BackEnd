@@ -16,8 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from product import views  # Certifique-se que o módulo views.py existe no seu app product
+
+# Cria o router padrão do DRF
+router = DefaultRouter()
+router.register(r'products', views.ProductViewSet, basename='product')
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),  # Inclui todas as URLs da API
 ]
