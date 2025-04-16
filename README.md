@@ -1,4 +1,4 @@
-Nesse projeto Back End, realizado junto ao curso da Ebac foi utilizado o Django Rest Framework, onde foi utilizado alguma funcionalidades como: 
+Nesse projeto Back End, realizado junto ao curso da Ebac foi utilizado o Django Rest Framework, onde foi realizado funcionalidades como: 
 
 - Serializers
 - Paginação
