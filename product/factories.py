@@ -29,8 +29,3 @@ class ProductFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Product
-
-
-
-
-

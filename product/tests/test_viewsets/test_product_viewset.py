@@ -41,7 +41,9 @@ class TestProductViewSet(APITestCase):
         product_data = response.json()
 
         self.assertEqual(product_data["results"][0]["title"], self.product.title)
-        self.assertEqual(float(product_data["results"][0]["price"]), float(self.product.price))
+        self.assertEqual(
+            float(product_data["results"][0]["price"]), float(self.product.price)
+        )
         self.assertEqual(product_data["results"][0]["active"], self.product.active)
 
     def test_create_product(self):
@@ -49,11 +51,7 @@ class TestProductViewSet(APITestCase):
         Deve permitir que um superusuário crie um produto e retorne HTTP 201.
         """
         category = CategoryFactory()
-        payload = {
-            "title": "notebook",
-            "price": 800.00,
-            "categories_id": [category.id]
-        }
+        payload = {"title": "notebook", "price": 800.00, "categories_id": [category.id]}
 
         url = reverse("product-list", kwargs={"version": "v1"})
         response = self.client.post(

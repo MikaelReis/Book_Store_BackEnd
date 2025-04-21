@@ -30,8 +30,7 @@ class TestOrderViewSet(APITestCase):
         self.order = OrderFactory(product=[self.product], user=self.user)
 
     def test_order(self):
-        response = self.client.get(
-            reverse("order-list", kwargs={"version": "v1"}))
+        response = self.client.get(reverse("order-list", kwargs={"version": "v1"}))
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -64,7 +63,9 @@ class TestOrderViewSet(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(Order.objects.filter(user=self.user).count(), initial_count + 1)
+        self.assertEqual(
+            Order.objects.filter(user=self.user).count(), initial_count + 1
+        )
 
-        new_order = Order.objects.filter(user=self.user).latest('id')
+        new_order = Order.objects.filter(user=self.user).latest("id")
         self.assertEqual(new_order.product.first().id, product.id)
