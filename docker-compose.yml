@@ -1,40 +1,30 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
-    ports:
-      - 8000:8000
-    env_file:
-      - ./env.dev
-    environment:
-      - PYTHONUNBUFFERED=1
-      - DATABASE_URL=postgresql://bookstore_dev:bookstore_dev@db:5432/bookstore_dev_db
-    depends_on:
-      - db
-    networks:
-      - backend
-
   db:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=bookstore_dev
       - POSTGRES_PASSWORD=bookstore_dev
       - POSTGRES_DB=bookstore_dev_db
-    networks:
-      - backend
-    ports:
-      - "5432:5432"
 
-networks:
-  backend:
-    driver: bridge
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - app_data:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./env.dev
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
+  app_data:
 

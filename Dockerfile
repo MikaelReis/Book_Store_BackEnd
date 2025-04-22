@@ -19,15 +19,19 @@ RUN pip install --upgrade pip && \
 
 WORKDIR /app
 
-# Copia e instala dependências primeiro (para cache)
+# Copia e instala dependências
 COPY pyproject.toml poetry.lock ./
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-interaction --no-ansi --only main
 
-# Copia o resto da aplicação
+# Instala todas as dependências, incluindo grupo 'dev'
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-interaction --no-ansi
+
+# Copia o restante do código
 COPY . .
 
-# Porta exposta
+# Expondo a porta
 EXPOSE 8000
 
+# Comando padrão
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
