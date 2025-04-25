@@ -1,0 +1,31 @@
+name: Deploy para PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main  # ou o branch de produção
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
+
+      - name: Enviar código para o PythonAnywhere
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.PYTHONANYWHERE_USERNAME }}@ssh.pythonanywhere.com <<EOF
+          cd /home/${{ secrets.PYTHONANYWHERE_USERNAME }}/Book_Store_BackEnd
+          git pull origin main
+          workon your-virtualenv-name  # se estiver usando virtualenvwrapper
+          pip install -r requirements.txt
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+          touch /var/www/${{ secrets.PYTHONANYWHERE_USERNAME }}_pythonanywhere_com_wsgi.py
+          EOF
