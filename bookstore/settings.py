@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-cxv=48ygm8qi)yf$m!82ea(+@02gx5brb4*te-!g#i%j!^0zw%"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost","127.0.0.1","MikaelReis.pythonanywhere.com"]
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "product",
     "rest_framework",
     "rest_framework.authtoken",
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = "bookstore.urls"
@@ -61,7 +63,7 @@ ROOT_URLCONF = "bookstore.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [os.path.join(BASE_DIR, 'bookstore', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR,'bookstore/templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

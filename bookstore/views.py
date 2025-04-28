@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render  # Use render em vez de loader
 
 import git
 
@@ -23,5 +24,11 @@ def update(request):
 
 
 def hello_world(request):
-    template = loader.get_template("hello_world.html")
-    return HttpResponse(template.render())
+    return render(request, 'hello_world.html')
+
+def home_view(request):
+    """View para a página inicial"""
+    return render(request, 'home.html')
+
+def home_page(request):
+    return render(request, 'home.html')
