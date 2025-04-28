@@ -23,11 +23,12 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),  # Coloquei esta URL apenas uma vez
+    path('__debug__/', include(debug_toolbar.urls)),
     path("admin/", admin.site.urls),
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
     path("update_server/", views.update, name="update"),
-    path('', views.home_view, name='home'),  # A raiz deve ser o primeiro caminho a ser checado
+    path('', views.home_view, name='home'),
+    path("update_server/", views.update, name="update"),
     path('hello/', views.hello_world, name='hello'),
     path('home/', views.home_page, name='home_page'),  # Nova rota
     re_path("bookstore/(?P<version>(v1|v2))/", include("order.urls")),
